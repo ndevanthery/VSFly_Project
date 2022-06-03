@@ -1,0 +1,59 @@
+﻿@model MVCClient2.Models.FlightStatVM
+
+@{
+    ViewData["Title"] = "Statistics";
+}
+
+<h1>Statistics for this flight </h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                FLIGHT ID
+            </th>
+            <th>
+                FROM
+            </th>
+            <th>
+                TO
+            </th>
+            <th>
+                DATE
+            </th>
+            <th>
+                PRICE
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(Model => Model.myFlight.FlightNo)
+            </td>
+            <td>
+                @Html.DisplayFor(Model => Model.myFlight.Departure)
+            </td>
+            <td>
+                @Html.DisplayFor(Model => Model.myFlight.Destination)
+            </td>
+            <td>
+                @Html.DisplayFor(Model => Model.myFlight.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(Model => Model.myFlight.Price) CHF
+            </td>
+
+        </tr>
+
+
+
+    </tbody>
+</table>
+<p><b>total recipy :</b> @Model.myStat.TotalPrice CHF</p>
+<p><b>number of tickets :</b> @Model.myStat.TicketsBought pieces</p>
+<p><b>average price :</b> @Model.myStat.AveragePrice CHF</p>
+
+    <div>
+        <a asp-action="Index">Go back to list</a>
+    </div>

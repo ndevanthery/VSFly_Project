@@ -1,0 +1,87 @@
+﻿@model MVCClient2.Models.FlightReservation
+
+@{
+    ViewData["Title"] = "BuyTicket";
+}
+
+<h1>Book this flight? </h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                FLIGHT ID
+            </th>
+            <th>
+                FROM
+            </th>
+            <th>
+                TO
+            </th>
+            <th>
+                DATE
+            </th>
+            <th>
+                PRICE
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(Model => Model.flight.FlightNo)
+            </td>
+            <td>
+                @Html.DisplayFor(Model => Model.flight.Departure)
+            </td>
+            <td>
+                @Html.DisplayFor(Model => Model.flight.Destination)
+            </td>
+            <td>
+                @Html.DisplayFor(Model => Model.flight.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(Model => Model.flight.Price) CHF
+            </td>
+
+        </tr>
+
+
+
+    </tbody>
+</table>
+<form asp-action="BuyTicket">
+    <input type="hidden" asp-for="flight.FlightNo" class="form-control" />
+    <input type="hidden" asp-for="flight.Price" class="form-control" />
+    <input type="hidden" asp-for="flight.takenSeats" class="form-control" />
+    <input type="hidden" asp-for="flight.totalSeats" class="form-control" />
+    <input type="hidden" asp-for="flight.Date" class="form-control" />
+    <input type="hidden" asp-for="flight.Departure" class="form-control" />
+    <input type="hidden" asp-for="flight.Destination" class="form-control" />
+
+
+
+
+    <div class="form-group">
+        <label asp-for="passenger.GivenName" class="control-label"></label>
+        <input asp-for="passenger.GivenName" class="form-control" />
+        <span asp-validation-for="passenger.GivenName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="passenger.Surname" class="control-label"></label>
+        <input asp-for="passenger.Surname" class="form-control" />
+        <span asp-validation-for="passenger.Surname" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="passenger.Weight" class="control-label"></label>
+        <input asp-for="passenger.Weight" class="form-control" />
+        <span asp-validation-for="passenger.Weight" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Proceed" class="btn btn-primary" />
+    </div>
+</form>
+    <div>
+        <a asp-action="Index">No. Go back to list</a>
+    </div>

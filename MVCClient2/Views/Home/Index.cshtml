@@ -1,0 +1,66 @@
+﻿@model IEnumerable<MVCClient2.Models.FlightM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Reserve Now !</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                FLIGHT ID
+            </th>
+            <th>
+                FROM
+            </th>
+            <th>
+                TO
+            </th>
+            <th>
+                DATE
+            </th>
+            <th>
+                PRICE
+            </th>
+            <th>
+                TAKEN PLACES
+            </th>
+            <th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlightNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Departure)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Destination)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price) CHF
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.takenSeats) / @Html.DisplayFor(modelItem => item.totalSeats)
+            </td>
+
+
+            <td>
+                @Html.ActionLink("Buy Ticket", "BuyTicket", new { id = item.FlightNo }) 
+                @Html.ActionLink("Stats", "Statistics", new { id = item.FlightNo }) 
+                @Html.ActionLink("Stats Destination", "StatisticsDestination", new { destination = item.Destination })
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
