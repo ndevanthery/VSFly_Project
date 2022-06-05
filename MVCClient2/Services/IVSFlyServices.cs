@@ -1,4 +1,5 @@
-﻿using MVCClient2.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using MVCClient2.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace MVCClient2.Services
     {
         public Task<IEnumerable<FlightM>> GetFlights();
         public Task<FlightM> GetFlight(int id);
-        public void Reserve(FlightReservation flightReservation);
+        public Task<IActionResult> Reserve(FlightReservation flightReservation);
         public Task<StatisticsFlightM> GetStatsFlight(int id);
         public Task<IEnumerable<BookingM>> GetBookingsDestination(string destination);
         public Task<StatisticsFlightM> GetStatsDestination(string destination);

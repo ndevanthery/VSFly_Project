@@ -55,7 +55,7 @@ namespace MVCClient2.Controllers
 
                     try
                     {
-                        _vsFly.Reserve(flightReservation);
+                        await _vsFly.Reserve(flightReservation);
                         return RedirectToAction("Index", "Home");
 
 

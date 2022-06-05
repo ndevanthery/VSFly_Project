@@ -40,7 +40,7 @@ namespace WebAPIVsFly.Controllers
                 {
                     takenSeats = f.BookingSet.Count;
                 }
-                if (takenSeats < f.Seats)
+                if (takenSeats < f.Seats && f.Date.CompareTo(DateTime.Now) > 0)
                 {
                     f.Price = calculatePrice(takenSeats, f.Seats, f.Date, f.Price);
                     var fM = f.convertToFlightM();
@@ -59,16 +59,17 @@ namespace WebAPIVsFly.Controllers
             }
             else
             {
-                if (DateTime.Now.AddMonths(2).CompareTo(date) > 0 && 1.0 * seatsTaken / seats < 0.2) // the flight is in less than 2 month & is filled less than 20%
+                if (DateTime.Now.AddMonths(1).CompareTo(date) > 0 && 1.0 * seatsTaken / seats < 0.5)//the flight is in less than 1 month & is filled less than 50%
                 {
-                    return 0.8 * basePrice;
+                    return 0.7 * basePrice;
+
                 }
+                
                 else
                 {
-                    if (DateTime.Now.AddMonths(1).CompareTo(date) > 0 && 1.0 * seatsTaken / seats < 0.5)//the flight is in less than 1 month & is filled less than 50%
+                    if (DateTime.Now.AddMonths(2).CompareTo(date) > 0 && 1.0 * seatsTaken / seats < 0.2) // the flight is in less than 2 month & is filled less than 20%
                     {
-                        return 0.7 * basePrice;
-
+                        return 0.8 * basePrice;
                     }
                     else
                     {
@@ -126,40 +127,24 @@ namespace WebAPIVsFly.Controllers
         [HttpPost]
         public async Task<IActionResult> Reserve(Booking booking)
         {
-            Passenger potential = null;
             if (booking.Passenger != null)
             {
+
+
+
                 try
                 {
-                    potential = _context.PassengerSet.Where(p => p.GivenName == booking.Passenger.GivenName && p.Surname == booking.Passenger.Surname).First();
+                    //int i = _context.PassengerSet.OrderBy(p=>p.PersonID).Last().PersonID +1;
+                    //booking.Passenger.PersonID = i;
+                    var newPassenger = _context.PassengerSet.Add(booking.Passenger).Entity;
+                    booking.PassengerID = newPassenger.PersonID;
+
 
                 }
                 catch (Exception e)
                 {
+                    var mess = e.Message;
 
-                }
-
-
-                if (potential == null)
-                {
-                    try
-                    {
-                        //int i = _context.PassengerSet.OrderBy(p=>p.PersonID).Last().PersonID +1;
-                        //booking.Passenger.PersonID = i;
-                        var newPassenger = _context.PassengerSet.Add(booking.Passenger).Entity;
-                        booking.PassengerID = newPassenger.PersonID;
-
-
-                    }
-                    catch (Exception e)
-                    {
-                        var mess = e.Message;
-
-                    }
-                }
-                else
-                {
-                    booking.PassengerID = potential.PersonID;
                 }
                 try
                 {

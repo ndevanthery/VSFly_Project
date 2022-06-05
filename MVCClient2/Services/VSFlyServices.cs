@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using MVCClient2.Models;
 using System.Text;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MVCClient2.Services
 {
@@ -73,13 +74,16 @@ namespace MVCClient2.Services
             
         }
 
-        public async void Reserve(FlightReservation flightReservation)
+        public async Task<IActionResult> Reserve(FlightReservation flightReservation)
         {
-            var payload = "{\"flightNo\": " + flightReservation.flight.FlightNo + ",\"passengerID\": 0,\"salePrice\": " + flightReservation.flight.Price + ",\"flight\": null,\"passenger\": {\"personID\": 0,\"surname\": \"" + flightReservation.passenger.Surname + "\",\"givenName\": \"" + flightReservation.passenger.GivenName + "\",\"weight\": " + flightReservation.passenger.Weight + ",\"bookingSet\": []}}";
+            var payload = "{\"flightNo\": " + flightReservation.flight.FlightNo + ",\"passengerID\": 0,\"salePrice\": " + flightReservation.flight.Price + ",\"flight\": null,\"passenger\": {\"personID\": 0,\"surname\": \"" + flightReservation.passenger.Surname + "\",\"givenName\": \"" + flightReservation.passenger.GivenName + "\",\"bookingSet\": []}}";
             HttpContent c = new StringContent(payload, Encoding.UTF8, "application/json");
 
             var response = await _client.PostAsync(_baseuri + "Reserve/", c);
             response.EnsureSuccessStatusCode();
+            var data2 = await response.Content.ReadAsStringAsync();
+            var action = JsonConvert.DeserializeObject<ActionResult>(data2);
+            return action;
         }
     }
 }

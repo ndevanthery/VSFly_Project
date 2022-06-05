@@ -13,9 +13,9 @@ namespace EFCoreApp2021
 
 
         // SQL Express
-        public static string ConnectionString { get; set; } = @"Server=(localDB)\MSSQLLocalDB;Database=WWWings_2022Step2;"+
-                                                  "Trusted_Connection=True;App=EFCoreApp2021;MultipleActiveResultSets=true";
-
+        //public static string ConnectionString { get; set; } = @"Server=(localDB)\MSSQLLocalDB;Database=WWWings_2022Step2;" +
+        //A                                          "Trusted_Connection=True;App=EFCoreApp2021;MultipleActiveResultSets=true";
+        public static string ConnectionString { get; set; } = "Data Source=153.109.124.35;Initial Catalog=NicoAbdu_VsFly;Persist Security Info=True;User ID=6231db;Password=Pwd46231.";
         public WWWingsContext() { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder) {
